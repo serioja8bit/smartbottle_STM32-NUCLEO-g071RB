@@ -1,0 +1,14 @@
+../Core/Src/main.c:107:6:updateMenu	8	static
+../Core/Src/main.c:112:6:execCommandSelect	8	static
+../Core/Src/main.c:143:6:setTimeInterval	8	static
+../Core/Src/main.c:158:6:setVolume	8	static
+../Core/Src/main.c:171:6:setLed	8	static
+../Core/Src/main.c:183:6:getValueADC	32	static
+../Core/Src/main.c:189:6:setAlarm	88	static
+../Core/Src/main.c:226:6:BuzzerPlayNote	24	static
+../Core/Src/main.c:243:6:playBuzzer	16	static
+../Core/Src/main.c:261:5:main	16	static
+../Core/Src/main.c:409:6:SystemClock_Config	88	static
+../Core/Src/main.c:453:6:HAL_GPIO_EXTI_Falling_Callback	16	static
+../Core/Src/main.c:478:6:HAL_RTC_AlarmAEventCallback	16	static
+../Core/Src/main.c:492:6:Error_Handler	8	static,ignoring_inline_asm
