@@ -1,0 +1,14 @@
+../Core/Src/main.c:107:6:updateMenu	1
+../Core/Src/main.c:112:6:execCommandSelect	9
+../Core/Src/main.c:143:6:setTimeInterval	2
+../Core/Src/main.c:158:6:setVolume	2
+../Core/Src/main.c:171:6:setLed	2
+../Core/Src/main.c:183:6:getValueADC	1
+../Core/Src/main.c:189:6:setAlarm	3
+../Core/Src/main.c:226:6:BuzzerPlayNote	2
+../Core/Src/main.c:243:6:playBuzzer	2
+../Core/Src/main.c:261:5:main	9
+../Core/Src/main.c:409:6:SystemClock_Config	3
+../Core/Src/main.c:453:6:HAL_GPIO_EXTI_Falling_Callback	8
+../Core/Src/main.c:478:6:HAL_RTC_AlarmAEventCallback	1
+../Core/Src/main.c:492:6:Error_Handler	1
