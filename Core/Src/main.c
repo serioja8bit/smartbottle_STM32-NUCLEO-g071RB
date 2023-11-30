@@ -29,9 +29,12 @@
 /* USER CODE BEGIN Includes */
 #include "ssd1306.h"
 #include "ds18b20.h"
+#include "melody.h"
 #include <string.h>
 #include <stdio.h>
-#include "melody.h"
+#include <stdlib.h>
+
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -43,8 +46,15 @@
 /* USER CODE BEGIN PD */
 #define MAX_TEMP 25
 #define MIN_TEMP 21
+#define CPU_FREQ 64000000
+#define PRESCALER 3200
+#define TEMPO 	108           // change this to make the song slower or faster
 
-
+										// notes of the melody followed by the duration.
+										// a 4 means a quarter note, 8 an eighteenth , 16 sixteenth, so on
+										// !!negative numbers are used to represent dotted notes,
+										// so -4 means a dotted quarter note, that is, a quarter plus an eighteenth!!
+#define DOTNOTE 1.5					// increases the duration in half for dotted notes
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -77,6 +87,8 @@ uint16_t value;
 float Temperature = 0;
 float waterVolume = 2;
 char string_buff[10];
+
+
 
 
 /* USER CODE END PV */
@@ -216,30 +228,42 @@ void setAlarm(uint8_t x){
 
 }
 
-void BuzzerPlayNote(int prescalerfornote, int NoteDurationMs)
+void BuzzerPlayNote(int newFreq, int NoteDurationMs)
 {
+
 	HAL_TIM_PWM_Start(&htim2,TIM_CHANNEL_1);
+	TIM2->ARR  = (CPU_FREQ / PRESCALER) / newFreq;
+	TIM2->CCR1 = TIM2->ARR / 2;
+	for(int i=0; i<NoteDurationMs; i++){
+		HAL_Delay(1);
+	}
 
-		for(int i = 0; i < NoteDurationMs ; i++)
-		{
-			//prescaler = 64000000 / (255 * prescalerfornote * 3);
 
-			TIM2->PSC =  prescalerfornote; //change prescaler for have the frequency of our note
-			HAL_Delay(1);
-
-		}
-		TIM2->PSC=0;
-	HAL_TIM_PWM_Stop(&htim2,TIM_CHANNEL_1);
 
 }
 
-void playBuzzer ()
+void playBuzzer (int melody[], int len)
 {
+	int divider = 0;
+	int noteDuration = 0;
+	int tempo = melody[0];
+	int wholeNote = (60000 * 4) / tempo;	// this calculates the duration of a whole note in ms (60s/tempo)*4 beats
 
-	for(int i = 0 ; i < melodySize; i++ ){
-			BuzzerPlayNote(marioMelody[i], marioDuration[i] * 7 );
-
+	for (int i = 1; i <= len; i+=2)
+	{
+		divider = melody[i+1];
+		if (divider > 0)
+		{
+			noteDuration = (wholeNote) / divider;
+		}else if(divider < 0)
+		{
+			noteDuration = (wholeNote) / abs(divider);
+			noteDuration *= DOTNOTE;
 		}
+
+		BuzzerPlayNote(melody[i], noteDuration);
+		HAL_TIM_PWM_Stop(&htim2,TIM_CHANNEL_1);
+	}
 }
 
 
@@ -275,12 +299,12 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_USART2_UART_Init();
   MX_TIM6_Init();
   MX_I2C1_Init();
   MX_ADC1_Init();
   MX_RTC_Init();
   MX_TIM2_Init();
+  MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
   HAL_TIM_Base_Start(&htim6);
   HAL_ADC_Start(&hadc1);
@@ -305,7 +329,7 @@ int main(void)
 	 	  }
 
 
-	 	  if(Menu_Stage_1==1)
+	 	  if(Menu_Stage_1 == 1)
 	 		  menu = 1;
 
 	 	  while (menu){
@@ -320,7 +344,6 @@ int main(void)
 	 	  sprintf(string_buff, "%.1f", Temperature);
 
 	 	  HAL_Delay(50);
-
 
 	 	  ssd1306_SetCursor(81, 7);
 
@@ -339,17 +362,6 @@ int main(void)
 	 	  water = 0;
 
 
-
-
-
-	 	  //fillPercents(uint8_t x1,uint8_t y1,uint8_t x2,uint8_t y2);
-
-	 	  //draw time on screen
-
-
-
-	 	  //readPinState(GPIOA, GPIO_PIN_4);
-	 	  //LED change behaivor
 
 	 	 if (led){
 	 	 		  if (Temperature > MIN_TEMP && Temperature < MAX_TEMP )
@@ -386,9 +398,10 @@ int main(void)
 	 	 	  }
 
 	 	  if(alarm){
-	 		  playBuzzer();
+
 	 		  setAlarm(hour);
 	 		  //resetTime();
+	 		  playBuzzer (nokia, nokiaLen);
 	 		  alarm = 0;
 	 	  }
   }

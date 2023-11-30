@@ -97,65 +97,52 @@
 #define NOTE_CS8 4435
 #define NOTE_D8  4699
 #define NOTE_DS8 4978
+#define REST 0
 
-const uint32_t marioMelody[] = {
-		  NOTE_E7, NOTE_E7, 0, NOTE_E7,
-		  0, NOTE_C7, NOTE_E7, 0,
-		  NOTE_G7, 0, 0,  0,
-		  NOTE_G6, 0, 0, 0,
 
-		  NOTE_C7, 0, 0, NOTE_G6,
-		  0, 0, NOTE_E6, 0,
-		  0, NOTE_A6, 0, NOTE_B6,
-		  0, NOTE_AS6, NOTE_A6, 0,
 
-		  NOTE_G6, NOTE_E7, NOTE_G7,
-		  NOTE_A7, 0, NOTE_F7, NOTE_G7,
-		  0, NOTE_E7, 0, NOTE_C7,
-		  NOTE_D7, NOTE_B6, 0, 0,
+int nokia[] = {
 
-		  NOTE_C7, 0, 0, NOTE_G6,
-		  0, 0, NOTE_E6, 0,
-		  0, NOTE_A6, 0, NOTE_B6,
-		  0, NOTE_AS6, NOTE_A6, 0,
-
-		  NOTE_G6, NOTE_E7, NOTE_G7,
-		  NOTE_A7, 0, NOTE_F7, NOTE_G7,
-		  0, NOTE_E7, 0, NOTE_C7,
-		  NOTE_D7, NOTE_B6, 0, 0
+  // Nokia Ringtone
+  // Score available at https://musescore.com/user/29944637/scores/5266155
+		380,//tempo
+		NOTE_E5, 8, NOTE_D5, 8, NOTE_FS4, 4, NOTE_GS4, 4,
+		  NOTE_CS5, 8, NOTE_B4, 8, NOTE_D4, 4, NOTE_E4, 4,
+		  NOTE_B4, 8, NOTE_A4, 8, NOTE_CS4, 4, NOTE_E4, 4,
+		  NOTE_A4, 2,
 };
 
+ int vader[] = {
 
-const uint32_t marioDuration[] = {
-		  12, 12, 12, 12,
-		  12, 12, 12, 12,
-		  12, 12, 12, 12,
-		  12, 12, 12, 12,
+   // Dart Vader theme (Imperial March) - Star wars
+   // Score available at https://musescore.com/user/202909/scores/1141521
+   // The tenor saxophone part was used
+   200,
+   NOTE_A4,-4, NOTE_A4,-4, NOTE_A4,16, NOTE_A4,16, NOTE_A4,16, NOTE_A4,16, NOTE_F4,8, REST,8,
+   NOTE_A4,-4, NOTE_A4,-4, NOTE_A4,16, NOTE_A4,16, NOTE_A4,16, NOTE_A4,16, NOTE_F4,8, REST,8,
+   NOTE_A4,4, NOTE_A4,4, NOTE_A4,4, NOTE_F4,-8, NOTE_C5,16,
 
-		  12, 12, 12, 12,
-		  12, 12, 12, 12,
-		  12, 12, 12, 12,
-		  12, 12, 12, 12,
+   NOTE_A4,4, NOTE_F4,-8, NOTE_C5,16, NOTE_A4,2,//4
+   NOTE_E5,4, NOTE_E5,4, NOTE_E5,4, NOTE_F5,-8, NOTE_C5,16,
+   NOTE_A4,4, NOTE_F4,-8, NOTE_C5,16, NOTE_A4,2,
 
-		  9, 9, 9,
-		  12, 12, 12, 12,
-		  12, 12, 12, 12,
-		  12, 12, 12, 12,
+   NOTE_A5,4, NOTE_A4,-8, NOTE_A4,16, NOTE_A5,4, NOTE_GS5,-8, NOTE_G5,16, //7
+   NOTE_DS5,16, NOTE_D5,16, NOTE_DS5,8, REST,8, NOTE_A4,8, NOTE_DS5,4, NOTE_D5,-8, NOTE_CS5,16,
 
-		  12, 12, 12, 12,
-		  12, 12, 12, 12,
-		  12, 12, 12, 12,
-		  12, 12, 12, 12,
+   NOTE_C5,16, NOTE_B4,16, NOTE_C5,16, REST,8, NOTE_F4,8, NOTE_GS4,4, NOTE_F4,-8, NOTE_A4,-16,//9
+   NOTE_C5,4, NOTE_A4,-8, NOTE_C5,16, NOTE_E5,2,
 
-		  9, 9, 9,
-		  12, 12, 12, 12,
-		  12, 12, 12, 12,
-		  12, 12, 12, 12,
-};
+   NOTE_A5,4, NOTE_A4,-8, NOTE_A4,16, NOTE_A5,4, NOTE_GS5,-8, NOTE_G5,16, //7
+   NOTE_DS5,16, NOTE_D5,16, NOTE_DS5,8, REST,8, NOTE_A4,8, NOTE_DS5,4, NOTE_D5,-8, NOTE_CS5,16,
+
+   NOTE_C5,16, NOTE_B4,16, NOTE_C5,16, REST,8, NOTE_F4,8, NOTE_GS4,4, NOTE_F4,-8, NOTE_A4,-16,//9
+   NOTE_A4,4, NOTE_F4,-8, NOTE_C5,16, NOTE_A4,2,
+
+ };
+
+const uint32_t nokiaLen = sizeof(nokia) / sizeof(nokia[0]);
+const uint32_t vaderLen = sizeof(vader) / sizeof(vader[0]);
 
 
 
-const uint16_t melodySlowfactor[] ={15, 30};
-
-const uint32_t melodySize = sizeof(marioMelody)/sizeof(uint32_t);
 #endif /* MELODY_H_ */
